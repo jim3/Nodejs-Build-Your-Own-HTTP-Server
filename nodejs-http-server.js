@@ -22,8 +22,7 @@ function parseRequest(httpRequest, socket) {
     console.log(`Printing httpRequest...${httpRequest}`);
     let str = httpRequest.toString();
     const httpReq = str.split("\r\n");
-
-    // Error checking for httpReq
+    
     if (httpReq.length < 2) {
         return `${RES400}\r\n\r\n`;
     }
@@ -42,7 +41,7 @@ function parseRequest(httpRequest, socket) {
     // Return response
     if (request_target === "/") {
         const headersString =
-            `Content-Type: ${headers["Content-Type"]}\r\n` +
+            `Content-Type: ${headers["Content-Type"]}\r\n` + 
             `Content-Length: ${headers["Content-Length"]}\r\n`;
         return `${RES200}\r\n${headersString}\r\n\r\n`;
     } else if (request_target.startsWith("/echo")) {
@@ -67,7 +66,7 @@ const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         handleConn(data, socket);
     });
-    socket.on("clo se", () => {
+    socket.on("close", () => {
         socket.end();
     });
 });
